@@ -1,0 +1,9 @@
+{
+    "uuid": "keysnek@expitau",
+    "name": "KeySnek Hotkey Utility",
+    "description": "Provides utilities used by the KeySnek hotkey daemon",
+    "shell-version": ["48", "47", "46", "45"],
+    "url": "https://github.com/expitau/keysnek",
+    "version": 1
+  }
+  
