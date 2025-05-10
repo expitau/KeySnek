@@ -17,10 +17,10 @@ active_hotkeys = []
 
 async def handle_events(ui: UInput, device: evdev.InputDevice):
     async for event in device.async_read_loop():
-        print(device.name, evdev.categorize(event))
+        # print(device.name, evdev.categorize(event))
         blocked = False
         for hotkey in active_hotkeys:
-            blocked = blocked or hotkey(ui, event)
+            blocked = blocked or hotkey(ui, event, device.active_keys())
         if not blocked:
             ui.write_event(event)
 

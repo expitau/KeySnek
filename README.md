@@ -5,6 +5,11 @@ KeySnek is a hotkey daemon for Linux that works seamlessly with Wayland and Gnom
 ## Installation
 
 ### Step 1 - Give root permission to access session dbus
+
+<!-- To allow user to modify uinput (no longer necessary, see below)
+- Write `KERNEL=="event*", SUBSYSTEM=="input", GROUP="input", MODE="660"` to `/etc/udev/rules.d/99-input.rules` (new file)
+- Add nathan to group `input` -->
+
 Create a new file in `/etc/dbus-1/session-local.conf`, and add the following to it
 ```xml
 <busconfig>
@@ -37,10 +42,9 @@ sudo .venv/bin/python main.py
 See example in [notepad.py](./scripts/notepad.py)
 
 ```py
-
-# Run our notepad function if "t" is pressed in a window matching ".*Text Editor"
+# Run our notepad function if SHIFT-T is pressed in a window matching ".*Text Editor"
 # If a hotkey returns True, it will block the event
-@hotkey(r".*Text Editor", "t")
+@hotkey(r".*Text Editor", "+t")
 def notepad(ui, event):
     ui.write_string("Hello, Notepad!")
     return True
