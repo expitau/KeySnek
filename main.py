@@ -11,7 +11,7 @@ from src.uinput import UInput
 from src.hotkeys import get_registered_hotkeys
 
 from src import failsafe
-failsafe.set_failsafe(20)
+failsafe.set_failsafe(40)
 
 active_hotkeys = []
 
@@ -20,7 +20,7 @@ async def handle_events(ui: UInput, device: evdev.InputDevice):
         # print(device.name, evdev.categorize(event))
         blocked = False
         for hotkey in active_hotkeys:
-            blocked = blocked or hotkey(ui, event, device.active_keys())
+            blocked = blocked or hotkey(ui, event, device)
         if not blocked:
             ui.write_event(event)
 
@@ -40,8 +40,8 @@ async def update():
         active_hotkeys = [x[1] for x in get_registered_hotkeys() if re.match(x[0], result)]
 
 def main():
-    # devicePaths = ['/dev/input/event3', '/dev/input/event18']
-    devicePaths = ['/dev/input/event3']
+    devicePaths = ['/dev/input/event3', '/dev/input/event18']
+    # devicePaths = ['/dev/input/event3']
     devices = [evdev.InputDevice(path) for path in devicePaths]
     for device in devices:
         device.grab()
