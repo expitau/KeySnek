@@ -1,0 +1,10 @@
+[Unit]
+Description=Binds custom keybinds
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/src/keysnek/.venv/bin/python /usr/src/keysnek/main.py
+
+[Install]
+WantedBy=graphical-session.target

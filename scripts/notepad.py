@@ -18,14 +18,15 @@ def record(ui, event, device):
         if recording:
             recording = False
             print("Recording stopped")
-            last_timestamp = min([e.timestamp() for e in event_log])
-            for event in event_log:
-                sleep(event.timestamp() - last_timestamp)
-                if (event.type != evdev.ecodes.EV_SYN):
-                    print("Replaying", evdev.categorize(event))
-                ui.write_event(event)
-                last_timestamp = event.timestamp()
-                # print(event.timestamp() - initial_timestamp, f"ui.write({event.type}, {event.code}, {event.value})")
+            for i in range(1):
+                last_timestamp = min([e.timestamp() for e in event_log])
+                for event in event_log:
+                    sleep(event.timestamp() - last_timestamp)
+                    if (event.type != evdev.ecodes.EV_SYN):
+                        print("Replaying", evdev.categorize(event))
+                    ui.write_event(event)
+                    last_timestamp = event.timestamp()
+                    # print(event.timestamp() - initial_timestamp, f"ui.write({event.type}, {event.code}, {event.value})")
             ui.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTMETA, 0)
             ui.write(evdev.ecodes.EV_KEY, evdev.ecodes.KEY_LEFTSHIFT, 0)
             ui.syn()
